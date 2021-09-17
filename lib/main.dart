@@ -6,6 +6,10 @@ import 'package:food_app_firebase/screens/login_page.dart';
 import 'package:food_app_firebase/screens/signup_page.dart';
 import 'package:food_app_firebase/screens/welcome_page.dart';
 
+import 'screens/checkout.dart';
+import 'screens/home_page.dart';
+import 'screens/product_list.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -26,16 +30,19 @@ class MyApp extends StatelessWidget {
         '/login': (_) => LoginPage(),
         '/signup': (_) => SignupPage(),
         '/home': (_) => HomePage(),
+        "/productList": (context) => ProductList(),
+        "/checkout": (context) => CheckOut(),
       },
       home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (ctx, snap) {
-            if (snap.hasData) {
-              print(FirebaseAuth.instance.currentUser);
-              return HomePage();
-            }
-            return WelcomePage();
-          }),
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, snap) {
+          if (snap.hasData) {
+            print(FirebaseAuth.instance.currentUser);
+            return HomePage();
+          }
+          return WelcomePage();
+        },
+      ),
     );
   }
 }
